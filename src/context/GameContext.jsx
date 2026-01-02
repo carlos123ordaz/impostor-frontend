@@ -25,7 +25,7 @@ export const GameProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const newSocket = io('https://impostor-backend-production-074e.up.railway.app');
+        const newSocket = io(import.meta.env.VITE_SERVER_URL || 'http://localhost:3001');
         setSocket(newSocket);
         setPlayerId(newSocket.id);
 
@@ -40,6 +40,7 @@ export const GameProvider = ({ children }) => {
                 players: updatedRoom.players.map(p => ({
                     name: p.name,
                     hasVoted: p.hasVoted,
+                    votedFor: p.votedFor,
                     id: p.id
                 })),
                 gameState: updatedRoom.gameState
@@ -78,12 +79,19 @@ export const GameProvider = ({ children }) => {
         });
 
         newSocket.on('voting-started', (updatedRoom) => {
-            setRoom(updatedRoom);
+            const clonedRoom = JSON.parse(JSON.stringify(updatedRoom));
+            setRoom(clonedRoom);
             setGameState('voting');
         });
 
         newSocket.on('vote-update', (data) => {
             console.log(`Votos: ${data.votedCount}/${data.totalPlayers}`);
+        });
+
+        newSocket.on('voting-tie', (data) => {
+            console.log('⚖️ EMPATE - Nueva votación', data);
+            setError(`¡Empate! Votación entre: ${data.tiedPlayers.map(p => p.name).join(', ')}`);
+            setTimeout(() => setError(null), 5000);
         });
 
         newSocket.on('game-ended', (result) => {
