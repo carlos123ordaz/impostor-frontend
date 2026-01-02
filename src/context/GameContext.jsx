@@ -30,22 +30,10 @@ export const GameProvider = ({ children }) => {
         setPlayerId(newSocket.id);
 
         newSocket.on('connect', () => {
-            console.log('Conectado al servidor');
             setPlayerId(newSocket.id);
         });
 
         newSocket.on('room-update', (updatedRoom) => {
-            console.log('📥 room-update recibido:', {
-                roomCode: updatedRoom.roomCode,
-                players: updatedRoom.players.map(p => ({
-                    name: p.name,
-                    hasVoted: p.hasVoted,
-                    votedFor: p.votedFor,
-                    id: p.id
-                })),
-                gameState: updatedRoom.gameState
-            });
-
             // Clonar el objeto para forzar re-render en React
             const clonedRoom = JSON.parse(JSON.stringify(updatedRoom));
             setRoom(clonedRoom);
@@ -83,13 +71,7 @@ export const GameProvider = ({ children }) => {
             setRoom(clonedRoom);
             setGameState('voting');
         });
-
-        newSocket.on('vote-update', (data) => {
-            console.log(`Votos: ${data.votedCount}/${data.totalPlayers}`);
-        });
-
         newSocket.on('voting-tie', (data) => {
-            console.log('⚖️ EMPATE - Nueva votación', data);
             setError(`¡Empate! Votación entre: ${data.tiedPlayers.map(p => p.name).join(', ')}`);
             setTimeout(() => setError(null), 5000);
         });

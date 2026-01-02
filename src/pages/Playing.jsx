@@ -118,17 +118,6 @@ const Playing = () => {
                     ))}
                 </div>
             </div>
-
-            {/* Instrucciones */}
-            <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-6">
-                <h4 className="font-bold text-purple-900 mb-3">📋 Cómo jugar:</h4>
-                <ul className="space-y-2 text-sm text-purple-800">
-                    <li>• Cada jugador debe describir la palabra por turnos</li>
-                    <li>• El impostor solo tiene una pista, no la palabra completa</li>
-                    <li>• Escucha atentamente para identificar al impostor</li>
-                    <li>• Al final del tiempo, votarán por quién creen que es el impostor</li>
-                </ul>
-            </div>
         </div>
     );
 };
