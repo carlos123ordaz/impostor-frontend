@@ -167,18 +167,16 @@ const WaitingRoom = () => {
                                 className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none"
                             >
                                 <option value="all">🎲 Todas las Categorías</option>
+                                <option value="fiesta">🎉 Fiesta</option>
+                                <option value="celebridades">⭐ Celebridades</option>
+                                <option value="navidad">🎄 Navidad</option>
+                                <option value="comida">🍕 Comida</option>
+                                <option value="hollywood">🎬 Hollywood</option>
+                                <option value="marcas">🏷️ Marcas</option>
+                                <option value="lugares">🗺️ Lugares</option>
                                 <option value="animales">🦁 Animales</option>
-                                <option value="lugares">🏛️ Lugares</option>
-                                <option value="objetos">📱 Objetos</option>
-                                <option value="comida">🍕 Comida y Bebida</option>
-                                <option value="naturaleza">🌊 Naturaleza</option>
-                                <option value="emociones">❤️ Emociones y Conceptos</option>
-                                <option value="profesiones">👨‍⚕️ Profesiones</option>
                                 <option value="deportes">⚽ Deportes</option>
-                                <option value="vehiculos">🚗 Vehículos</option>
-                                <option value="musica">🎸 Música</option>
-                                <option value="tecnologia">💻 Tecnología</option>
-                                <option value="varios">🎯 Varios</option>
+                                <option value="picante">🌶️ Picante</option>
                             </select>
                         </div>
 
