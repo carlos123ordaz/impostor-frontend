@@ -25,7 +25,7 @@ export const GameProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const newSocket = io(import.meta.env.VITE_SERVER_URL || 'http://localhost:3001');
+        const newSocket = io('https://impostor-backend-production-074e.up.railway.app');
         setSocket(newSocket);
         setPlayerId(newSocket.id);
 
