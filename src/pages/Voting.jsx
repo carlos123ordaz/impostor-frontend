@@ -25,24 +25,15 @@ const Voting = () => {
             const votedCount = room.players.filter(p => p.hasVoted).length;
             const totalPlayers = room.players.length;
 
-            console.log('🔍 Verificando estado de voto...', {
-                votedCount,
-                totalPlayers,
-                roomPlayers: room.players.map(p => ({ name: p.name, hasVoted: p.hasVoted })),
-                myId: playerId
-            });
 
-            console.log('👤 Mi estado:', currentPlayer);
 
             if (currentPlayer?.hasVoted) {
-                console.log('✅ Ya voté, actualizando UI');
                 setHasVoted(true);
                 // Guardar por quién voté
                 if (currentPlayer.votedFor) {
                     setSelectedPlayer(currentPlayer.votedFor);
                 }
             } else {
-                console.log('⏳ Aún no he votado');
                 setHasVoted(false);
             }
         }
@@ -54,12 +45,9 @@ const Voting = () => {
 
     const handleVote = () => {
         if (!selectedPlayer) return;
-        console.log('📤 Enviando voto por:', selectedPlayer);
         vote(selectedPlayer);
         setHasVoted(true);
     };
-
-    console.log('📊 Estado de votación:', { votedCount, totalPlayers, hasVoted, currentPlayer: room?.players.find(p => p.id === playerId) });
 
     return (
         <div className="space-y-6">
