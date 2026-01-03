@@ -67,24 +67,36 @@ const Playing = () => {
             {/* Botones de control */}
             <div className="bg-white rounded-3xl shadow-2xl p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {/* Botón siguiente turno - Todos pueden usarlo */}
-                    <button
-                        onClick={nextTurn}
-                        className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-4 rounded-2xl font-bold text-lg hover:scale-105 transition-all shadow-lg"
-                    >
-                        <SkipForward size={24} />
-                        Siguiente Turno
-                    </button>
+                    {/* Botón siguiente turno - Solo visible para quien tiene el turno */}
+                    {isMyTurn && (
+                        <button
+                            onClick={nextTurn}
+                            className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-4 rounded-2xl font-bold text-lg hover:scale-105 transition-all shadow-lg"
+                        >
+                            <SkipForward size={24} />
+                            Siguiente Turno
+                        </button>
+                    )}
 
                     {/* Botón de votación (solo admin) */}
                     {isAdmin && (
                         <button
                             onClick={startVoting}
-                            className="flex items-center justify-center gap-2 bg-red-500 text-white px-6 py-4 rounded-2xl font-bold text-lg hover:scale-105 transition-all shadow-lg"
+                            className={`flex items-center justify-center gap-2 bg-red-500 text-white px-6 py-4 rounded-2xl font-bold text-lg hover:scale-105 transition-all shadow-lg ${isMyTurn ? '' : 'md:col-span-2'
+                                }`}
                         >
                             <Vote size={24} />
                             Iniciar Votación
                         </button>
+                    )}
+
+                    {/* Si no eres admin ni es tu turno, mostrar mensaje */}
+                    {!isAdmin && !isMyTurn && (
+                        <div className="md:col-span-2 text-center p-4 bg-gray-50 rounded-xl">
+                            <p className="text-gray-600 font-semibold">
+                                Esperando el turno de {currentTurnPlayer?.name || 'otro jugador'}...
+                            </p>
+                        </div>
                     )}
                 </div>
             </div>
@@ -132,9 +144,6 @@ const Playing = () => {
                         {role.isImpostor ? <EyeOff size={24} /> : <Eye size={24} />}
                         Tu Información
                     </h3>
-                    <span className="px-4 py-2 bg-white/20 rounded-full font-bold text-sm">
-                        {role.isImpostor ? 'IMPOSTOR' : 'JUGADOR'}
-                    </span>
                 </div>
 
                 <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6 relative">
