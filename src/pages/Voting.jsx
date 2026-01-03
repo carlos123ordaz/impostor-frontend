@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useGame } from '../context/GameContext';
-import { Vote, CheckCircle, User } from 'lucide-react';
+import { Vote, CheckCircle, User, LogOut } from 'lucide-react';
 
 const Voting = () => {
-    const { room, playerId, vote } = useGame();
+    const { room, playerId, vote, leaveGame } = useGame();
     const [selectedPlayer, setSelectedPlayer] = useState(null);
     const [hasVoted, setHasVoted] = useState(false);
 
@@ -24,8 +24,6 @@ const Voting = () => {
             const currentPlayer = room.players.find(p => p.id === playerId);
             const votedCount = room.players.filter(p => p.hasVoted).length;
             const totalPlayers = room.players.length;
-
-
 
             if (currentPlayer?.hasVoted) {
                 setHasVoted(true);
@@ -51,6 +49,17 @@ const Voting = () => {
 
     return (
         <div className="space-y-6">
+            {/* Botón de salir */}
+            <div className="flex justify-end">
+                <button
+                    onClick={leaveGame}
+                    className="flex items-center gap-2 text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-xl transition-colors text-sm font-semibold shadow-lg"
+                >
+                    <LogOut size={18} />
+                    Salir del Juego
+                </button>
+            </div>
+
             {/* Header */}
             <div className="bg-gradient-to-r from-red-500 to-pink-600 rounded-3xl shadow-2xl p-8 text-white text-center">
                 <div className="inline-block p-4 bg-white/20 rounded-full mb-4 animate-bounce">

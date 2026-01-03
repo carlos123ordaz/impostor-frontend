@@ -1,9 +1,9 @@
 import React from 'react';
 import { useGame } from '../context/GameContext';
-import { Trophy, Skull, PartyPopper, RefreshCw, Home } from 'lucide-react';
+import { Trophy, Skull, PartyPopper, RefreshCw, LogOut } from 'lucide-react';
 
 const GameEnd = () => {
-    const { gameResult, role, isAdmin, restartGame } = useGame();
+    const { gameResult, role, isAdmin, restartGame, leaveGame } = useGame();
 
     if (!gameResult) return null;
 
@@ -109,8 +109,6 @@ const GameEnd = () => {
                             {Object.entries(gameResult.voteCounts)
                                 .sort(([, a], [, b]) => b - a)
                                 .map(([playerId, votes]) => {
-                                    // Encontrar el nombre del jugador votado
-                                    const votedPlayer = gameResult.votedOutPlayer;
                                     return (
                                         <div
                                             key={playerId}
@@ -138,19 +136,28 @@ const GameEnd = () => {
                             Jugar de Nuevo
                         </button>
                         <button
-                            onClick={() => window.location.reload()}
+                            onClick={leaveGame}
                             className="flex-1 bg-gray-600 text-white py-4 px-6 rounded-2xl font-bold text-lg hover:scale-105 transform transition-all shadow-lg flex items-center justify-center gap-3"
                         >
-                            <Home size={24} />
+                            <LogOut size={24} />
                             Salir
                         </button>
                     </>
                 ) : (
-                    <div className="w-full text-center p-6 bg-yellow-50 rounded-2xl">
-                        <p className="text-yellow-800 font-semibold">
-                            Esperando a que el administrador decida...
-                        </p>
-                    </div>
+                    <>
+                        <div className="flex-1 text-center p-6 bg-yellow-50 rounded-2xl">
+                            <p className="text-yellow-800 font-semibold">
+                                Esperando a que el administrador decida...
+                            </p>
+                        </div>
+                        <button
+                            onClick={leaveGame}
+                            className="bg-gray-600 text-white py-4 px-6 rounded-2xl font-bold text-lg hover:scale-105 transform transition-all shadow-lg flex items-center justify-center gap-3"
+                        >
+                            <LogOut size={24} />
+                            Salir
+                        </button>
+                    </>
                 )}
             </div>
         </div>

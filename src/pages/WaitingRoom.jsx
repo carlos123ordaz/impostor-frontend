@@ -1,31 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useGame } from '../context/GameContext';
-import { Users, Copy, Check, Settings, Play, Crown, User } from 'lucide-react';
+import { Users, Copy, Check, Settings, Play, Crown, User, LogOut } from 'lucide-react';
 
 const WaitingRoom = () => {
-    const { room, isAdmin, updateSettings, startGame } = useGame();
+    const { room, isAdmin, updateSettings, startGame, leaveGame } = useGame();
     const [copied, setCopied] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const [settings, setSettings] = useState({
         impostorCount: 1,
-        roundDuration: 120,
         category: 'all',
         impostorCanSeeHint: false
     });
 
-    // useEffect DEBE estar antes de cualquier return condicional
     useEffect(() => {
         if (room?.settings) {
             setSettings({
                 impostorCount: room.settings.impostorCount || 1,
-                roundDuration: room.settings.roundDuration || 120,
                 category: room.settings.category || 'all',
                 impostorCanSeeHint: room.settings.impostorCanSeeHint || false
             });
         }
     }, [room]);
 
-    // Ahora sí podemos hacer el return condicional después de todos los hooks
     if (!room) return null;
 
     const copyRoomCode = () => {
@@ -51,6 +47,17 @@ const WaitingRoom = () => {
         <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
             {/* Header con código de sala */}
             <div className="text-center mb-8">
+                <div className="flex justify-between items-start mb-4">
+                    <button
+                        onClick={leaveGame}
+                        className="flex items-center gap-2 text-gray-500 hover:text-red-600 transition-colors text-sm font-semibold"
+                    >
+                        <LogOut size={18} />
+                        Salir
+                    </button>
+                    <div className="flex-1"></div>
+                </div>
+
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Sala de Espera</h2>
 
                 <div className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-100 to-pink-100 px-6 py-3 rounded-2xl">
@@ -138,24 +145,6 @@ const WaitingRoom = () => {
                             </select>
                         </div>
 
-                        {/* Duración de la Ronda */}
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                Duración de la Ronda
-                            </label>
-                            <select
-                                value={settings.roundDuration}
-                                onChange={(e) => setSettings({ ...settings, roundDuration: parseInt(e.target.value) })}
-                                className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none"
-                            >
-                                <option value={60}>1 minuto</option>
-                                <option value={90}>1:30 minutos</option>
-                                <option value={120}>2 minutos</option>
-                                <option value={180}>3 minutos</option>
-                                <option value={240}>4 minutos</option>
-                            </select>
-                        </div>
-
                         {/* Categoría de Palabras */}
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -213,7 +202,7 @@ const WaitingRoom = () => {
 
             {/* Información de configuración actual */}
             <div className="mb-6 p-4 bg-blue-50 rounded-xl">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div className="grid grid-cols-3 gap-4 text-center">
                     <div>
                         <p className="text-sm text-gray-600">Impostores</p>
                         <p className="text-2xl font-black text-blue-600">
@@ -221,26 +210,19 @@ const WaitingRoom = () => {
                         </p>
                     </div>
                     <div>
-                        <p className="text-sm text-gray-600">Duración</p>
-                        <p className="text-2xl font-black text-blue-600">
-                            {Math.floor(room.settings.roundDuration / 60)}:{(room.settings.roundDuration % 60).toString().padStart(2, '0')}
-                        </p>
-                    </div>
-                    <div>
                         <p className="text-sm text-gray-600">Categoría</p>
                         <p className="text-lg font-black text-blue-600 capitalize">
-                            {room.settings.category === 'all' ? '🎲 Todas' :
-                                room.settings.category === 'animales' ? '🦁' :
-                                    room.settings.category === 'lugares' ? '🏛️' :
-                                        room.settings.category === 'objetos' ? '📱' :
+                            {room.settings.category === 'all' ? '🎲' :
+                                room.settings.category === 'fiesta' ? '🎉' :
+                                    room.settings.category === 'celebridades' ? '⭐' :
+                                        room.settings.category === 'navidad' ? '🎄' :
                                             room.settings.category === 'comida' ? '🍕' :
-                                                room.settings.category === 'naturaleza' ? '🌊' :
-                                                    room.settings.category === 'emociones' ? '❤️' :
-                                                        room.settings.category === 'profesiones' ? '👨‍⚕️' :
-                                                            room.settings.category === 'deportes' ? '⚽' :
-                                                                room.settings.category === 'vehiculos' ? '🚗' :
-                                                                    room.settings.category === 'musica' ? '🎸' :
-                                                                        room.settings.category === 'tecnologia' ? '💻' : '🎯'}
+                                                room.settings.category === 'hollywood' ? '🎬' :
+                                                    room.settings.category === 'marcas' ? '🏷️' :
+                                                        room.settings.category === 'lugares' ? '🗺️' :
+                                                            room.settings.category === 'animales' ? '🦁' :
+                                                                room.settings.category === 'deportes' ? '⚽' :
+                                                                    room.settings.category === 'picante' ? '🌶️' : '🎯'}
                         </p>
                     </div>
                     <div>
@@ -275,4 +257,4 @@ const WaitingRoom = () => {
     );
 };
 
-export default WaitingRoom;
+export default WaitingRoom; 

@@ -13,7 +13,7 @@ const RoleReveal = () => {
         rounded-3xl shadow-2xl p-12 text-center max-w-2xl w-full
         ${role.isImpostor
                     ? 'bg-gradient-to-br from-red-500 to-pink-600 text-white animate-pulse-slow'
-                    : 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white'}
+                    : 'bg-gradient-to-br from-purple-500 to-indigo-600 text-white'}
       `}>
                 <div className="mb-8">
                     <div className="inline-block p-6 bg-white/20 rounded-full mb-6 animate-bounce">
@@ -39,25 +39,30 @@ const RoleReveal = () => {
                     <div className="flex items-center justify-center gap-3 mb-4">
                         <Eye size={24} />
                         <h3 className="text-2xl font-bold">
-                            {role.isImpostor ? 'Tu Pista' : 'La Palabra'}
+                            {role.isImpostor
+                                ? (role.hint ? 'Tu Pista' : 'Eres')
+                                : 'La Palabra'}
                         </h3>
                     </div>
 
                     <p className="text-4xl md:text-5xl font-black tracking-wider">
-                        {role.isImpostor ? role.hint : role.word}
+                        {role.isImpostor
+                            ? (role.hint || 'IMPOSTOR')
+                            : role.word}
                     </p>
                 </div>
 
                 <div className="text-lg opacity-90">
                     {role.isImpostor ? (
                         <p>
-                            Los demás jugadores conocen la palabra completa.<br />
-                            Usa la pista para fingir que también la conoces.
+                            {role.hint
+                                ? 'Los demás jugadores conocen la palabra completa. Usa la pista para fingir que también la conoces.'
+                                : 'Los demás jugadores conocen la palabra completa. Intenta actuar como si la conocieras sin ser descubierto.'}
                         </p>
                     ) : (
                         <p>
                             Todos los jugadores conocen esta palabra,<br />
-                            excepto el impostor que solo tiene una pista.
+                            excepto el impostor que {role.hint ? 'solo tiene una pista' : 'no la conoce'}.
                         </p>
                     )}
                 </div>
