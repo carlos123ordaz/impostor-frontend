@@ -156,6 +156,11 @@ export const GameProvider = ({ children }) => {
             setTimeout(() => setError(null), 3000);
         });
 
+        newSocket.on('player-left', (data) => {
+            setError(`${data.playerName} salió del juego`);
+            setTimeout(() => setError(null), 3000);
+        });
+
         return () => {
             newSocket.close();
         };
@@ -244,8 +249,18 @@ export const GameProvider = ({ children }) => {
     };
 
     const leaveGame = () => {
+        if (room && socket) {
+            // Notificar al servidor que estamos saliendo intencionalmente
+            socket.emit('leave-game', { roomCode: room.roomCode });
+        }
+
+        // Limpiar localStorage
         localStorage.removeItem('gameSession');
-        window.location.reload();
+
+        // Esperar un momento para que el servidor procese la salida
+        setTimeout(() => {
+            window.location.reload();
+        }, 300);
     };
 
     const value = {
