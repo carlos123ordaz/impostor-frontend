@@ -9,6 +9,10 @@ const GameEnd = () => {
     if (!gameResult) return null;
 
     const playerWon = role.isImpostor ? !gameResult.impostorFound : gameResult.impostorFound;
+    const resultTitle = gameResult?.impostorFound
+        ? '¡Los Jugadores Ganaron!'
+        : '¡El Impostor Ganó!';
+
 
     return (
         <>
