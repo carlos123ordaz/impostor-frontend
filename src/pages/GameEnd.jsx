@@ -4,7 +4,7 @@ import { Trophy, Skull, PartyPopper, RefreshCw, LogOut } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 
 const GameEnd = () => {
-    const { gameResult, role, isAdmin, restartGame, leaveGame } = useGame();
+    const { gameResult, role, isAdmin, restartGame, leaveGame, room } = useGame();
 
     if (!gameResult) return null;
 
