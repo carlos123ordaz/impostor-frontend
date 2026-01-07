@@ -49,7 +49,7 @@ const Lobby = () => {
         description: 'Juega Impostor, un emocionante juego de deducción multijugador. Descubre al impostor entre tus amigos. ¡Gratis, sin descargas y sin registro!',
         keywords: 'impostor game, juego multijugador, juego deducción, juego online, juego gratis, werewolf game, among us',
         image: '/og-image-lobby.png',
-        url: 'https://tudominio.com',
+        url: 'https://impostor.lat',
         type: 'website'
     };
 

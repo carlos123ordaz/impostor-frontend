@@ -16,7 +16,7 @@ export const SEOHead = ({
     description = 'Juega Impostor, un emocionante juego de deducción multijugador online. Descubre al impostor entre tus amigos. ¡Gratis y sin descargas!',
     keywords = 'impostor game, juego multijugador, juego de deducción, juego online gratis',
     image = '/og-image.png',
-    url = typeof window !== 'undefined' ? window.location.href : 'https://tudominio.com',
+    url = typeof window !== 'undefined' ? window.location.href : 'https://impostor.lat',
     type = 'website',
     author = 'Impostor Game',
     locale = 'es_ES',
